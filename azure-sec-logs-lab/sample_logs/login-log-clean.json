@@ -1,0 +1,11 @@
+{
+  "source": "fictional-lab",
+  "description": "No account reaches the failure threshold",
+  "events": [
+    {"username": "dave", "status": "failure", "ip": "203.0.113.40", "timestamp": "2026-10-03T21:00:00Z"},
+    {"username": "dave", "status": "success", "ip": "203.0.113.40", "timestamp": "2026-10-03T21:00:30Z"},
+    {"username": "erin", "status": "failure", "ip": "198.51.100.9", "timestamp": "2026-10-03T21:01:00Z"},
+    {"username": "erin", "status": "failure", "ip": "198.51.100.9", "timestamp": "2026-10-03T21:01:20Z"},
+    {"username": "erin", "status": "success", "ip": "198.51.100.9", "timestamp": "2026-10-03T21:02:00Z"}
+  ]
+}

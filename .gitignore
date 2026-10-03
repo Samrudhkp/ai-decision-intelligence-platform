@@ -118,5 +118,10 @@ Desktop.ini
 # Streamlit
 .streamlit/secrets.toml
 
+# Azure Functions local settings / lab secrets
+**/local.settings.json
+azure-sec-logs-lab/.env
+*.zip
+
 # Docker overrides (local only)
 docker-compose.override.yml

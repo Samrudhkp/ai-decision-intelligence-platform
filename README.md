@@ -5,6 +5,16 @@ added as features are implemented.
 
 ---
 
+## Related Azure lab
+
+This repo also includes a small event-driven Azure security lab under [`azure-sec-logs-lab/`](azure-sec-logs-lab/):
+
+**Blob Storage (`logs`) → Event Grid → Azure Function (`AnalyzeLoginLog`) → Blob Storage (`reports`)**
+
+See that folder’s README for the interview pitch, GCP↔Azure mapping, deploy/teardown scripts, and sample logs. Live deploy needs Azure credentials in the environment (not stored in git).
+
+---
+
 ## Overview
 
 Enterprise **AI forecasting and decision intelligence** platform in Python for:
