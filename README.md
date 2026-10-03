@@ -28,7 +28,7 @@ Enterprise **AI forecasting and decision intelligence** platform in Python for:
 7. **Dashboard** — Streamlit UI for predictions, clusters, forecasts, and SHAP  
 8. **Azure integration** — raw datasets in Azure Blob Storage; future train/deploy with Azure Machine Learning (credentials via environment variables / Azure auth only)
 
-> **Current status:** repository scaffold only. Machine learning models are **not** implemented yet. This phase establishes structure, dependencies, configuration templates, and documentation for GitHub publication.
+> **Current status:** core platform implemented end-to-end on synthetic data, with artifacts uploaded to Azure Blob Storage (`rg-decision-intelligence` / `stdipfd2177`). Run `python scripts/run_pipeline.py --upload-azure` to retrain and refresh cloud files.
 
 ---
 
@@ -124,9 +124,10 @@ cp .env.example .env
 # Never commit .env or real credentials.
 ```
 
-### 5. Verify the scaffold
+### 5. Generate data, train models, upload to Azure
 
 ```bash
+python scripts/run_pipeline.py --upload-azure
 pytest
 ```
 
@@ -134,25 +135,29 @@ pytest
 
 ## Run instructions
 
-### FastAPI (scaffold)
+### FastAPI
 
 ```bash
-uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+PYTHONPATH=. uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 - Root: http://127.0.0.1:8000/  
 - Health: http://127.0.0.1:8000/health  
-- Interactive docs: http://127.0.0.1:8000/docs  
+- Docs: http://127.0.0.1:8000/docs  
+- Churn metrics: http://127.0.0.1:8000/churn/metrics  
+- Segments: http://127.0.0.1:8000/segmentation/profiles  
+- Forecasts: http://127.0.0.1:8000/forecast/pytorch  
+- SHAP: http://127.0.0.1:8000/explain/shap  
 
-### Streamlit dashboard (scaffold)
+### Streamlit dashboard
 
 ```bash
-streamlit run app/dashboard.py
+PYTHONPATH=. streamlit run app/dashboard.py
 ```
 
 Open the URL shown in the terminal (default http://127.0.0.1:8501).
 
-### MLflow UI (when experiments exist)
+### MLflow UI
 
 ```bash
 mlflow ui --backend-store-uri ./mlruns --port 5000
@@ -212,25 +217,33 @@ python -m src.utils.azure_storage smoke # upload smoke test to raw-datasets
 
 ## Results
 
-> Placeholder — publish evaluation tables and charts after models are trained.
+Synthetic demo run (2,000 customers, 48 months revenue). Best churn model by ROC-AUC: **logistic_regression**.
 
 ### Churn model comparison
 
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
 |-------|----------|-----------|--------|----|---------|
-| Logistic Regression | — | — | — | — | — |
-| Random Forest | — | — | — | — | — |
-| XGBoost | — | — | — | — | — |
+| Logistic Regression | 0.690 | 0.241 | 0.714 | 0.361 | **0.772** |
+| Random Forest | 0.858 | 0.375 | 0.245 | 0.296 | 0.733 |
+| XGBoost | 0.808 | 0.294 | 0.408 | 0.342 | 0.730 |
 
-### Segmentation
+### Segmentation (K=4)
 
-- Number of clusters: _TBD_  
-- Segment summaries: _TBD_  
+| Segment | Customers | Avg tenure | Avg monthly $ | Churn rate |
+|---------|-----------|------------|---------------|------------|
+| high_value_at_risk | 596 | 16.4 | 82.2 | 0.232 |
+| loyal_premium | 656 | 55.7 | 82.8 | 0.070 |
+| value_seekers | 559 | 34.0 | 42.7 | 0.052 |
+| steady_core | 189 | 35.5 | 63.3 | 0.175 |
 
 ### Revenue forecasting
 
-- Baseline metric (e.g. MAE / MAPE): _TBD_  
-- PyTorch model metric: _TBD_  
+| Model | MAE | MAPE |
+|-------|-----|------|
+| Baseline (seasonal naive) | 23,457 | 12.02% |
+| PyTorch LSTM | **13,032** | **6.72%** |
+
+Artifacts also live in Azure `processed-datasets/` (see [`docs/azure.md`](docs/azure.md)).
 
 ---
 

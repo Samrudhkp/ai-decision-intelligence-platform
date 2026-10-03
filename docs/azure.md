@@ -2,7 +2,18 @@
 
 Provisioned against the authenticated subscription (East US, pay-as-you-go friendly).
 
-## Live lab resources (current)
+## Portal links (click to inspect)
+
+| What | Link |
+|------|------|
+| Subscription | [Azure subscription](https://portal.azure.com/#@/resource/subscriptions/7146a0eb-4440-48e9-8d8b-55b54b45f380/overview) |
+| Resource group | [rg-decision-intelligence](https://portal.azure.com/#@/resource/subscriptions/7146a0eb-4440-48e9-8d8b-55b54b45f380/resourceGroups/rg-decision-intelligence/overview) |
+| Storage account | [stdipfd2177](https://portal.azure.com/#@/resource/subscriptions/7146a0eb-4440-48e9-8d8b-55b54b45f380/resourceGroups/rg-decision-intelligence/providers/Microsoft.Storage/storageAccounts/stdipfd2177/overview) |
+| Containers blade | [Blob containers](https://portal.azure.com/#@/resource/subscriptions/7146a0eb-4440-48e9-8d8b-55b54b45f380/resourceGroups/rg-decision-intelligence/providers/Microsoft.Storage/storageAccounts/stdipfd2177/containersList) |
+| Cost Management | [Cost analysis](https://portal.azure.com/#view/Microsoft_Azure_CostManagement/Menu/~/costanalysis) |
+| All resources | [Resource list](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Resources%2Fresources) |
+
+## Live lab resources
 
 | Resource | Value |
 |----------|--------|
@@ -11,15 +22,30 @@ Provisioned against the authenticated subscription (East US, pay-as-you-go frien
 | Storage account | `stdipfd2177` |
 | Account URL | `https://stdipfd2177.blob.core.windows.net` |
 | Containers | `raw-datasets`, `processed-datasets` |
-| Auth | Azure CLI / `DefaultAzureCredential` (no keys in git) |
+| Auth | Azure CLI / chained credential (no keys in git) |
+
+## Blob URLs currently uploaded
+
+### raw-datasets
+- https://stdipfd2177.blob.core.windows.net/raw-datasets/customers_churn.csv
+- https://stdipfd2177.blob.core.windows.net/raw-datasets/monthly_revenue.csv
+
+### processed-datasets
+- https://stdipfd2177.blob.core.windows.net/processed-datasets/churn/comparison.json
+- https://stdipfd2177.blob.core.windows.net/processed-datasets/segmentation/segment_profiles.json
+- https://stdipfd2177.blob.core.windows.net/processed-datasets/forecasting/baseline_forecast.json
+- https://stdipfd2177.blob.core.windows.net/processed-datasets/forecasting/pytorch_forecast.json
+- https://stdipfd2177.blob.core.windows.net/processed-datasets/explainability/shap_feature_importance.json
+- https://stdipfd2177.blob.core.windows.net/processed-datasets/explainability/shap_summary.png
+- https://stdipfd2177.blob.core.windows.net/processed-datasets/pipeline_summary.json
 
 > Connection strings and secrets are **not** stored in this repository.  
 > Local agent/runtime names are written to `.azure-platform.env` (gitignored).
 
 ## What was intentionally deferred
 
-- **Azure Machine Learning workspace** — create later when training/deploy starts (higher cost).
-- Model endpoints / App Service — after FastAPI prediction APIs exist.
+- **Azure Machine Learning workspace** — create later when you want cloud training jobs (higher cost).
+- Model endpoints / App Service — optional next step after FastAPI is stable.
 
 ## Provision / teardown
 
@@ -33,13 +59,7 @@ chmod +x scripts/*.sh
 ## Python helpers
 
 ```bash
-# Load resource names, then smoke-test upload to raw-datasets
 set -a && source .azure-platform.env && set +a
-python -m src.utils.azure_storage smoke
+PYTHONPATH=. python scripts/run_pipeline.py --upload-azure
+PYTHONPATH=. python -m src.utils.azure_storage smoke
 ```
-
-APIs:
-
-- `upload_raw_dataset` / `download_raw_dataset`
-- `upload_processed_dataset`
-- `list_blobs`
