@@ -166,7 +166,17 @@ mlflow ui --backend-store-uri ./mlruns --port 5000
 - Copy `.env.example` → `.env` and fill values locally; `.env` is gitignored.  
 - Prefer **Azure CLI** (`az login`) or **managed identity** with `DefaultAzureCredential`.  
 - For CI, use service principal env vars (`AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`) injected by the secret store — never checked into Git.  
-- Optional local Blob access: `AZURE_STORAGE_CONNECTION_STRING` in `.env` only.
+- Optional local Blob access: `AZURE_STORAGE_CONNECTION_STRING` in `.env` only.  
+
+### Azure platform resources
+
+See [`docs/azure.md`](docs/azure.md) for the live resource group / Blob Storage setup used by this project:
+
+```bash
+./scripts/provision_azure_platform.sh   # RG + storage + raw/processed containers
+python -m src.utils.azure_storage smoke # upload smoke test to raw-datasets
+./scripts/teardown_azure_platform.sh    # delete the whole RG when done
+```
 
 ---
 
