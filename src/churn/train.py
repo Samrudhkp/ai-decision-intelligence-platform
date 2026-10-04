@@ -11,6 +11,8 @@ import mlflow
 import mlflow.sklearn
 import numpy as np
 import pandas as pd
+
+from src.utils.mlflow_utils import configure_mlflow
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -116,7 +118,7 @@ def train_and_compare(
     neg = max(int((y_train == 0).sum()), 1)
     scale_pos_weight = neg / pos
 
-    mlflow.set_experiment(experiment_name)
+    configure_mlflow(experiment_name=experiment_name)
     comparison: list[dict[str, Any]] = []
     fitted: dict[str, Pipeline] = {}
 

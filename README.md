@@ -187,31 +187,35 @@ python -m src.utils.azure_storage smoke # upload smoke test to raw-datasets
 
 ## Roadmap (phased delivery)
 
-| Phase | Scope |
-|-------|--------|
-| **0 (this)** | Structure, README, requirements, `.env.example`, `.gitignore`, API/dashboard stubs |
-| **1** | Sample/synthetic data contracts + churn model training & comparison |
-| **2** | K-Means segmentation |
-| **3** | Baseline + PyTorch revenue forecasting |
-| **4** | SHAP explanations |
-| **5** | MLflow experiment tracking end-to-end |
-| **6** | FastAPI prediction endpoints |
-| **7** | Streamlit dashboard views |
-| **8** | Azure Blob + Azure ML wiring |
+| Phase | Scope | Status |
+|-------|--------|--------|
+| **0** | Structure, README, requirements, `.env.example`, `.gitignore` | Done |
+| **1** | Synthetic data + churn model comparison | Done |
+| **2** | K-Means segmentation | Done |
+| **3** | Baseline + PyTorch revenue forecasting | Done |
+| **4** | SHAP explanations | Done |
+| **5** | MLflow experiment tracking | Done |
+| **6** | FastAPI prediction endpoints | Done |
+| **7** | Streamlit dashboard (metrics + interactive scoring) | Done |
+| **8** | Azure Blob + minimal Azure ML workspace (no paid compute) | Done |
 
 ---
 
 ## Screenshots
 
-> Placeholder — add UI captures after the dashboard and API are implemented.
+Run locally and capture from:
 
-| View | Description | Image |
-|------|-------------|-------|
-| Dashboard home | Overview of platform modules | _TBD_ |
-| Churn results | Model comparison metrics | _TBD_ |
-| Segmentation | Cluster profiles | _TBD_ |
-| Forecasting | Revenue forecast chart | _TBD_ |
-| SHAP | Local / global explanations | _TBD_ |
+- Streamlit: `make dashboard` → http://127.0.0.1:8501  
+- API docs: `make api` → http://127.0.0.1:8000/docs  
+- Azure ML Studio: see [`docs/azure.md`](docs/azure.md)
+
+| View | Description |
+|------|-------------|
+| Dashboard Overview | Artifact readiness table |
+| Churn | Metrics chart + interactive scorer |
+| Segmentation | Cluster profiles + assignment |
+| Forecasting | Baseline vs PyTorch charts |
+| SHAP | Feature importance + summary plot |
 
 ---
 
@@ -253,16 +257,18 @@ Artifacts also live in Azure `processed-datasets/` (see [`docs/azure.md`](docs/a
 - [x] `.env.example` without real credentials  
 - [x] No API keys or connection strings in the repository  
 - [x] Professional README with architecture and setup  
-- [ ] Initialize remotes / push when you are ready (not done in this phase)  
+- [x] MIT `LICENSE`  
+- [x] Azure resources use CLI / `DefaultAzureCredential` patterns  
+- [x] Azure ML workspace created **without** paid compute VMs  
 
 ---
 
 ## License
 
-Specify a license (e.g. MIT, Apache-2.0) before publishing publicly.
+MIT — see [`LICENSE`](LICENSE).
 
 ---
 
 ## Contributing
 
-Phased contributions preferred: implement one capability at a time (see Roadmap), keep secrets out of commits, and add tests with each feature.
+Use `make help` for common tasks. Keep secrets out of commits, prefer `scripts/run_pipeline.py` for retraining, and add tests with each feature.

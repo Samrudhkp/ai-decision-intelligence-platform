@@ -82,3 +82,10 @@ set -a && source .azure-platform.env && set +a
 PYTHONPATH=. python scripts/run_pipeline.py --upload-azure
 PYTHONPATH=. python -m src.utils.azure_storage smoke
 ```
+
+Optional: send MLflow runs to the Azure ML workspace tracker (still no compute VMs):
+
+```bash
+export AZURE_ML_TRACKING_URI="azureml://eastus.api.azureml.ms/mlflow/v1.0/subscriptions/7146a0eb-4440-48e9-8d8b-55b54b45f380/resourceGroups/rg-decision-intelligence/providers/Microsoft.MachineLearningServices/workspaces/mlw-decision-intelligence"
+PYTHONPATH=. python scripts/run_pipeline.py
+```

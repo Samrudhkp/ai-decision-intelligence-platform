@@ -15,6 +15,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from src.utils.mlflow_utils import configure_mlflow
+
 FEATURE_COLUMNS = [
     "tenure_months",
     "monthly_charges",
@@ -102,7 +104,7 @@ def fit_segments(
     profiles_records = profiles.round(3).to_dict(orient="records")
     profiles_path.write_text(json.dumps(profiles_records, indent=2), encoding="utf-8")
 
-    mlflow.set_experiment(experiment_name)
+    configure_mlflow(experiment_name=experiment_name)
     with mlflow.start_run(run_name=f"kmeans_k{n_clusters}"):
         mlflow.log_params({"n_clusters": n_clusters, "seed": seed})
         mlflow.log_metric("inertia", float(pipe.named_steps["kmeans"].inertia_))

@@ -1,8 +1,13 @@
-# Placeholder: exploratory notebooks will live here.
-# Examples (to be added later):
-#   01_eda_churn.ipynb
-#   02_customer_segmentation.ipynb
-#   03_revenue_forecasting.ipynb
-#   04_shap_explanations.ipynb
-#
-# Do not commit notebooks that embed secrets, raw PII datasets, or large outputs.
+# Notebooks
+
+| Notebook | Purpose |
+|----------|---------|
+| `01_eda_churn_revenue.ipynb` | Quick EDA on synthetic churn + revenue data |
+
+Generate data first:
+
+```bash
+PYTHONPATH=. python -c "from src.utils.data_generation import write_datasets; write_datasets()"
+```
+
+Do not commit notebooks that embed secrets, raw PII, or huge outputs.

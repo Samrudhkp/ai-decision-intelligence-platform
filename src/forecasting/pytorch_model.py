@@ -13,6 +13,8 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader, TensorDataset
 
+from src.utils.mlflow_utils import configure_mlflow
+
 
 class RevenueLSTM(nn.Module):
     def __init__(self, hidden_size: int = 32, num_layers: int = 1) -> None:
@@ -140,7 +142,7 @@ def fit_pytorch_forecaster(
     path = out / "pytorch_forecast.json"
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
-    mlflow.set_experiment(experiment_name)
+    configure_mlflow(experiment_name=experiment_name)
     with mlflow.start_run(run_name="pytorch_lstm"):
         mlflow.log_params({"window": window, "horizon": horizon, "epochs": epochs, "lr": lr})
         mlflow.log_metrics({"mae": mae, "mape": mape})
