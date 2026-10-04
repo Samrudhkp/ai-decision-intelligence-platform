@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+name: monthly-revenue-raw
+description: Synthetic monthly revenue series in Blob Storage
+type: uri_file
+path: https://stdipfd2177.blob.core.windows.net/raw-datasets/monthly_revenue.csv

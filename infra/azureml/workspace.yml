@@ -1,0 +1,11 @@
+$schema: https://azuremlschemas.azureedge.net/latest/workspace.schema.json
+name: mlw-decision-intelligence
+location: eastus
+display_name: mlw-decision-intelligence
+description: >
+  Minimal Azure ML workspace for the Decision Intelligence Platform.
+  No compute clusters/instances are defined here (keeps cost near zero).
+  Reuses the existing platform storage account when created via CLI with --storage-account.
+tags:
+  project: decision-intelligence
+  cost_profile: minimal-no-compute

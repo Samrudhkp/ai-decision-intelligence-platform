@@ -1,0 +1,128 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.env/
+.python-version
+
+# Environment & secrets — never commit credentials
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+credentials/
+service-principal.json
+azure-credentials.json
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+dmypy.json
+
+# MLflow
+mlruns/
+mlartifacts/
+mlflow.db
+
+# Model artifacts (trained weights, pickles, checkpoints)
+models/**
+!models/.gitkeep
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.pt
+*.pth
+*.onnx
+*.cbm
+checkpoints/
+runs/
+
+# Datasets — keep folder structure, ignore contents
+data/raw/**
+!data/raw/.gitkeep
+data/processed/**
+!data/processed/.gitkeep
+data/external/**
+!data/external/.gitkeep
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.xlsx
+*.xls
+*.json.gz
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Logs & local outputs
+logs/
+*.log
+output/
+outputs/
+tmp/
+temp/
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Azure / cloud local config
+.azure/
+.azure-platform.env
+*.publishsettings
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Azure Functions local settings / lab secrets
+**/local.settings.json
+azure-sec-logs-lab/.env
+*.zip
+
+# Docker overrides (local only)
+docker-compose.override.yml
