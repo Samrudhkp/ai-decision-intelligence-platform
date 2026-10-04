@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+name: customers-churn-raw
+description: Synthetic customer churn dataset in Blob Storage
+type: uri_file
+path: https://stdipfd2177.blob.core.windows.net/raw-datasets/customers_churn.csv

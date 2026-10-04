@@ -42,10 +42,29 @@ Provisioned against the authenticated subscription (East US, pay-as-you-go frien
 > Connection strings and secrets are **not** stored in this repository.  
 > Local agent/runtime names are written to `.azure-platform.env` (gitignored).
 
-## What was intentionally deferred
+## Azure Machine Learning (minimal / near-zero cost)
 
-- **Azure Machine Learning workspace** — create later when you want cloud training jobs (higher cost).
-- Model endpoints / App Service — optional next step after FastAPI is stable.
+Created **without any compute VMs** so you are not charged for training machines.
+
+| What | Value / link |
+|------|----------------|
+| Workspace | [`mlw-decision-intelligence`](https://ml.azure.com/?wsid=/subscriptions/7146a0eb-4440-48e9-8d8b-55b54b45f380/resourceGroups/rg-decision-intelligence/providers/Microsoft.MachineLearningServices/workspaces/mlw-decision-intelligence) |
+| Portal resource | [Workspace blade](https://portal.azure.com/#@/resource/subscriptions/7146a0eb-4440-48e9-8d8b-55b54b45f380/resourceGroups/rg-decision-intelligence/providers/Microsoft.MachineLearningServices/workspaces/mlw-decision-intelligence/overview) |
+| Registered data | `customers-churn-raw`, `monthly-revenue-raw` |
+| Registered model | `churn-best-model` (from local joblib) |
+| Compute clusters/instances | **None** |
+
+### Free vs paid (plain English)
+
+| Item | Cost impact |
+|------|-------------|
+| Azure ML **workspace** itself | Free |
+| Reusing existing Blob Storage | Already have it (pennies for tiny demo files) |
+| Key Vault + App Insights + Log Analytics (auto-created) | Free/near-free at demo scale |
+| **Compute Instance / Cluster / endpoint VMs** | **Costs money** — do not create these for a free lab |
+| Local training (`scripts/run_pipeline.py`) | Free (runs on this machine, not Azure VMs) |
+
+Provision helper: `./scripts/provision_azure_ml.sh`
 
 ## Provision / teardown
 
